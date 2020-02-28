@@ -1,0 +1,52 @@
+//array input
+
+@mixin reset-aa-button {
+  background: none;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+  line-height: 1;
+  padding: 0;
+  text-shadow: none;
+  vertical-align: middle;
+
+  &:not(.disabled) {
+    &:hover,
+    &:active,
+    &:focus {
+      background: none;
+      border: 0;
+      box-shadow: none;
+    }
+  }
+}
+
+.formtastic li.array.input {
+  .input-group--array {
+    width: calc(80% - 22px);
+    margin: 0 0 0 243px;
+    .input-group--array__item {
+      padding: 5px 0;
+      input {
+        width: calc(100% - 47px);
+        display: inline-block;
+        margin: 0 6px 0 0;
+      }
+    }
+
+    .array-action--add,
+    .array-action--remove {
+      @include reset-aa-button;
+      display: inline-block;
+      font-size: rem(15);
+    }
+
+    .array-action--add {
+      color: green;
+    }
+
+    .array-action--remove {
+      color: red;
+    }
+  }
+}

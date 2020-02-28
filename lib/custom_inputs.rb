@@ -1,6 +1,11 @@
+require "formtastic"
 require "custom_inputs/version"
+require_relative "formtastic/inputs/array_input"
 
 module CustomInputs
-  class Error < StandardError; end
-  # Your code goes here...
+  module Rails
+    class Engine < ::Rails::Engine
+    end
+  end
 end
+
