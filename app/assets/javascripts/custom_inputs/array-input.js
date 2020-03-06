@@ -1,44 +1,74 @@
-(function() {
-    $(function() {
-        var removeFromArrayInput;
-        removeFromArrayInput = function(el) {
-            var input;
-            input = $(el).siblings('input');
-            if (input.attr('disabled') === 'disabled') {
-                $(el).html('<i class="fa fa-times-circle"></i>').removeClass('can-undo');
-                $(input).removeAttr('disabled');
-                return $(input).removeClass('text--strike');
-            } else {
-                $(el).html('<i class="fa fa-undo"></i>').addClass('can-undo');
-                $(input).attr('disabled', 'disabled');
-                return $(input).addClass('text--strike');
-            }
-        };
-        $('.js-add-to-array-input').click(function(e) {
-            var clone, clone_id, input, original;
-            e.preventDefault;
-            if ($(this).hasClass('array-action--add')) {
-                original = $(this).parent();
-                clone = $(original).clone(true);
-                clone_id = "clone_" + (Math.floor((Math.random() * 100000) + 1));
-                input = $(clone).find('input');
-                if ($(input).val() !== '') {
-                    $(original).find('input').removeClass('has-error');
-                    $(input).removeClass('has-error').attr('id', clone_id).val('');
-                    $(this).html('<i class="fa fa-times-circle"></i>').attr('class', 'array-action--remove js-remove-from-array-input');
-                    $(this).parent().parent().append($(clone));
-                    return $("#" + clone_id).focus();
-                } else {
-                    return $(original).find('input').addClass('has-error').focus();
-                }
-            } else {
-                return removeFromArrayInput($(this));
-            }
-        });
-        return $('.js-remove-from-array-input').click(function(e) {
-            e.preventDefault;
-            return removeFromArrayInput($(this));
-        });
-    });
+function removeFromArrayInput(e) {
+    let button = this;
+    let input = button.previousSibling;
+    let undoable = button.classList.contains('undoable');
 
-}).call(this);
+    if (undoable) {
+        if (input.disabled) {
+            button.innerHTML = `<i class="fa fa-minus-circle"></i>`;
+            input.disabled = false;
+            return input.classList.remove('text--strike');
+        } else {
+            button.innerHTML = `<i class="fa fa-undo"></i>`;
+            input.disabled = true;
+            input.classList.add('text--strike');
+        }
+    } else {
+        button.parentElement.remove();
+    }
+}
+
+function createNewInput(value) {
+    let template = document.querySelector('.input-group--array__item.template');
+    let clone = template.cloneNode(true);
+
+    clone.classList.remove('template', 'hidden')
+
+    let input = clone.querySelector('input');
+    input.removeAttribute('disabled');
+    input.value = value;
+    input.focus();
+
+    return clone;
+}
+
+function handleKeyDown(event) {
+    if (event.key === 'Enter') {
+        handleAddClick(event, this.nextSibling);
+        return false;
+    }
+}
+
+function handleAddClick(e, b) {
+    e.preventDefault();
+
+    let button = b || this;
+    let newItemField = button.parentNode;
+    let input = button.previousSibling;
+
+    let value = input.value;
+    if (value !== '') {
+        input.value = '';
+        let clone = createNewInput(value);
+        newItemField.parentNode.insertBefore(clone, newItemField);
+    } else {
+        return input.focus();
+    }
+}
+
+function clearEmptyValues() {
+    $('.input-group--array__item input').each((index, input) => {
+        if (!input.value) {
+            input.setAttribute('disabled', 'disabled');
+        }
+    });
+}
+
+$(document).ready(function () {
+    $('.js-add-to-array-input').click(handleAddClick);
+    $('form').submit(clearEmptyValues);
+
+    let arrayInputContainer = $('.input-group--array');
+    $(arrayInputContainer).on('click', '.js-remove-from-array-input', removeFromArrayInput);
+    $(arrayInputContainer).on('keydown', '.input-group--array__item input', handleKeyDown)
+});

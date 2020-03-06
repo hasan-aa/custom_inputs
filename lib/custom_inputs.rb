@@ -1,11 +1,9 @@
 require "formtastic"
-require "custom_inputs/version"
-require_relative "formtastic/inputs/array_input"
 
 module CustomInputs
-  module Rails
-    class Engine < ::Rails::Engine
-    end
+  class Engine < ::Rails::Engine
+    config.autoload_paths += Dir["#{config.root}/lib"]
+    # ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Formtastic::Inputs::ArrayInput'
   end
 end
 
