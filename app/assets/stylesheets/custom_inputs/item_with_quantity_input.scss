@@ -1,0 +1,41 @@
+//item_with_quantity input
+@import "./variables";
+
+.item_with_quantity{
+  &.view{
+    width: auto;
+  }
+
+  th{
+    text-align: left;
+  }
+  &.error {
+    table tr {
+      border-color: $danger-color
+    }
+  }
+  .item-list-container {
+    width: 100%;
+    padding-left: 25%;
+    padding-right: 25%;
+  }
+  .hidden {
+    display: none;
+  }
+  .item-quantity-group:first-child {
+    margin-left: 0;
+  }
+  .item-quantity-group {
+    display: flex;
+    max-width: 50%;
+    margin-left: 25%;
+    justify-content: space-between;
+    .item-item, .select2 {
+      flex: 3;
+    }
+    .item-quantity {
+      flex: 1;
+      margin-left: 10px;
+    }
+  }
+}

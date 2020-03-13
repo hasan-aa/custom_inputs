@@ -1,0 +1,22 @@
+<div class="item_with_quantity view">
+
+  <table class="item-table">
+    <tbody>
+    <tr>
+      <% items[0].each do |key, value| %>
+        <th><%= key %></th>
+      <% end %>
+    </tr>
+    <% items.each do |item| %>
+      <tr class="item-row">
+        <% item.each do |key, value| %>
+
+          <td><%= value %></td>
+
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+</div>

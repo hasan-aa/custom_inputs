@@ -1,8 +1,8 @@
 module Formtastic
   module Inputs
-
     class ArrayInput
       include Base
+      include InputHelpers
 
       def to_html
         @undoable = options[:undoable]
@@ -28,12 +28,12 @@ module Formtastic
       private
 
       def array_input_html(value, remove = true, hidden = false)
-        icon_classes = remove ? 'fa fa-minus-circle' : 'fa fa-plus-circle'
+        icon_name = remove ? 'minus-circle' : 'plus-circle'
         button_classes = remove ? 'array-action--remove js-remove-from-array-input' : 'array-action--add js-add-to-array-input'
         button_classes += ' undoable' if @undoable
 
         button = template.content_tag(:button,
-                                      template.content_tag(:i, '', class: icon_classes),
+                                      icon_tag(icon_name),
                                       class: button_classes,
                                       type: 'button')
 
@@ -41,7 +41,7 @@ module Formtastic
         wrapper_classes += ' hidden template' if hidden
 
         template.content_tag(:div, class: wrapper_classes) do
-          template.text_field_tag("#{object_name}[#{method}][]", value, id: nil, disabled: hidden) << button
+          ci_text_field("#{object_name}[#{method}][]", value, id: nil, disabled: hidden) << button
         end
       end
 
