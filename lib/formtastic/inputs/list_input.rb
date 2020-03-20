@@ -1,15 +1,15 @@
 module Formtastic
   module Inputs
-    class ItemWithQuantityInput
+    class ListInput
       include Base
       include InputHelpers
 
-      def with_quantity?
-        if @with_quantity.nil?
-          @with_quantity = options[:with_quantity]
-          @with_quantity = true if @with_quantity.nil?
+      def has_quantity?
+        if @has_quantity.nil?
+          @has_quantity = options[:has_quantity]
+          @has_quantity = true if @has_quantity.nil?
         end
-        @with_quantity
+        @has_quantity
       end
 
       def to_html
@@ -20,7 +20,7 @@ module Formtastic
           label_html <<
               template.content_tag(:div, class: 'item-quantity-group') do
                 tags = select_html
-                tags << quantity_html if with_quantity?
+                tags << quantity_html if has_quantity?
                 tags << buttons(false)
               end <<
               template.content_tag(:div, nil, class: 'item-list-container') do
@@ -33,7 +33,7 @@ module Formtastic
                       template.content_tag(:th, header.to_s)
                     }.join.html_safe
                     # Quantity header
-                    headers << template.content_tag(:th, 'Quantity') if with_quantity?
+                    headers << template.content_tag(:th, 'Quantity') if has_quantity?
                     # Button header
                     headers << template.content_tag(:th)
                   end <<
@@ -53,7 +53,7 @@ module Formtastic
         unique_field = options[:unique_field] || 'id'
         unique_value = item
         quantity = nil
-        if item and with_quantity?
+        if item and has_quantity?
           unique_value = item[unique_field.to_s]
           quantity = item['quantity']
         end
@@ -70,11 +70,11 @@ module Formtastic
             cell = template.content_tag(:td, "", class: "#{key}-cell", field: key.to_s) do
               item_data[key].to_s
             end
-            cell << hidden_field(key, true, item_data[key]) if with_quantity?
+            cell << hidden_field(key, true, item_data[key]) if has_quantity?
             cell
           }.join.html_safe
 
-          if with_quantity?
+          if has_quantity?
             # Quantity cell
             cells << template.content_tag(:td, class: 'quantity-cell') do
               quantity
@@ -103,7 +103,7 @@ module Formtastic
         options = {class: "hidden-#{key}"}
         options['field'] = key.to_s if insert_field_attr
 
-        if with_quantity?
+        if has_quantity?
           # When with quantity build an array of objects with fields given in options.
           # template.hidden_field_tag("#{object_name}[#{method}][][#{key}]", value = value, options = options)
           ci_hidden_field("#{object_name}[#{method}][][#{key}]", value = value, options = options)
