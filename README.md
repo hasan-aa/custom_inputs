@@ -11,6 +11,13 @@ If you are using any other theme you can ignore the css files of this gem and im
 
 *Note:* Although these inputs are being actively used in a production app you should use them at your own risk.
 
+
+
+
+**Demo App:** https://custom-inputs-demo.herokuapp.com/admin  \
+**Demo User:** admin@example.com / password
+
+
 - [Array input](#array-input)
 - [List input](#list-input)
 

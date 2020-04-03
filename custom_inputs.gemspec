@@ -11,7 +11,12 @@ Gem::Specification.new do |spec|
   spec.authors = ["Hasan Ali Ayar"]
   spec.email = ["hasan.a.ayar@gmail.com"]
 
-  spec.summary = "Custom form input fields for active admin + formtastic."
+  spec.summary = `Custom form input fields for active admin + formtastic.
+
+Demo app: https://custom-inputs-demo.herokuapp.com/admin
+Demo user: admin@example.com / password
+
+`
   spec.description = `I've been using Active Admin for developing admin panels for my clients.
 There are number of custom input components accumulated along the way.
 
@@ -22,16 +27,16 @@ If you are using any other theme you can ignore the css files of this gem and im
 
 Note: Although these inputs are being actively used in a production app you should use them at your own risk.
 `
-  spec.homepage = "https://github.com/hasan-aa/custom-active-admin-inputs"
+  spec.homepage = "https://github.com/hasan-aa/custom_inputs"
   spec.license = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+    spec.metadata["allowed_push_host"] = "https://rubygems.org/"
 
     spec.metadata["homepage_uri"] = spec.homepage
-    spec.metadata["source_code_uri"] = "https://github.com/hasan-aa/custom-active-admin-inputs"
+    spec.metadata["source_code_uri"] = "https://github.com/hasan-aa/custom_inputs"
     # spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
